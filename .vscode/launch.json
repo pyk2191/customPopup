@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run SalesOrderV1-SalesOrderV1Module",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@sap/html5-repo-mock/index.js",
+      "args": [
+        "--standalone",
+        "/commdpertsalesSalesOrderV1Module/test/flpSandbox.html",
+        "--ui5",
+        "{\"version\":\"1.78.11\"}"
+      ],
+      "cwd": "${workspaceFolder}/SalesOrderV1Module",
+      "env": {
+        "PORT": "6004",
+        "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
+        "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/SalesOrderV1/SalesOrderV1Module\"}"
+      },
+      "envFile": "${workspaceFolder}/SalesOrderV1Module/.env1",
+      "preLaunchTask": "Build SalesOrderV1"
+    }
+  ]
+}

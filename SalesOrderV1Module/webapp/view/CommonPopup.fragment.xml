@@ -1,0 +1,17 @@
+<mvc:View
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<Dialog id="commonCode" draggable="true" resizable="true"
+        contentWidth="1100px"
+        contentHeight="500px"
+        title="CommonCode">
+        
+        <endButton>
+            <Button text="취소" press=".onDialogCancel" />
+        </endButton>
+
+	</Dialog>
+
+</mvc:View>

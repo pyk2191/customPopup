@@ -1,0 +1,62 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+	xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+
+	<Dialog id="excelUpload" draggable="true" resizable="true"
+        contentWidth="1100px"
+        contentHeight="500px"
+        title="Excel">
+
+        <Table  items="{localModel>/items}">
+            <headerToolbar>
+                <Toolbar>
+                    <u:FileUploader id="FileUploaderId" sameFilenameAllowed="true" iconOnly="false" buttonOnly="true" fileType="XLSX,xlsx"
+                        icon="sap-icon://upload" iconFirst="true" style="Emphasized" change="onUpload"/>
+                </Toolbar>
+            </headerToolbar>
+            <columns>
+                <Column id="excelHeader1">
+                    <Text text="itemCode" id="excelFild1"/>
+                </Column>
+                <Column id="excelHeader2" hAlign="End">
+                    <Text text="itemName" id="excelFild2"/>
+                </Column>
+                <Column id="excelHeader3" hAlign="End">
+                    <Text text="cnt" id="excelFild3"/>
+                </Column>
+                <Column id="excelHeader4" hAlign="End">
+                    <Text text="price" id="excelFild4"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier
+                            title="{localModel>itemCode}"/>
+                        <ObjectIdentifier
+                            title="{localModel>itemName}"/>
+                        <ObjectIdentifier
+                            title="{localModel>cnt}"/>
+                        <ObjectIdentifier
+                            title="{localModel>price}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+            
+        
+        <beginButton>
+            <Button text="저장" press=".onDialogSave" />
+        </beginButton>
+        
+        <endButton>
+            <Button text="취소" press=".onDialogCancel" />
+        </endButton>
+
+	</Dialog>
+
+</core:FragmentDefinition>

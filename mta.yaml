@@ -1,0 +1,81 @@
+_schema-version: "3.2"
+ID: SalesOrderV1
+version: 0.0.1
+modules:
+- name: SalesOrderV1-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: uaa_SalesOrderV1
+    parameters:
+      service-key:
+        name: uaa_SalesOrderV1-key
+  - name: SalesOrderV1_html_repo_host
+    parameters:
+      service-key:
+        name: SalesOrderV1_html_repo_host-key
+  - name: SalesOrderV1-destination-service
+    parameters:
+      content-target: true
+  parameters:
+    content:
+      subaccount:
+        destinations:
+        - Name: SalesOrderV1_SalesOrderV1_html_repo_host
+          ServiceInstanceName: SalesOrderV1-html5-app-host-service
+          ServiceKeyName: SalesOrderV1_html_repo_host-key
+          sap.cloud.service: SalesOrderV1
+        - Authentication: OAuth2UserTokenExchange
+          Name: SalesOrderV1_uaa_SalesOrderV1
+          ServiceInstanceName: SalesOrderV1-xsuaa-service
+          ServiceKeyName: uaa_SalesOrderV1-key
+          sap.cloud.service: SalesOrderV1
+        existing_destinations_policy: update
+  build-parameters:
+    no-source: true
+- name: SalesOrderV1_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: SalesOrderV1_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - SalesOrderV1Module-content.zip
+      name: SalesOrderV1Module
+      target-path: resources/
+- name: SalesOrderV1Module
+  type: html5
+  path: SalesOrderV1Module
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: SalesOrderV1-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-name: SalesOrderV1-destination-service
+    service-plan: lite
+- name: SalesOrderV1_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: SalesOrderV1-html5-app-host-service
+    service-plan: app-host
+- name: uaa_SalesOrderV1
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: SalesOrderV1-xsuaa-service
+    service-plan: application
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

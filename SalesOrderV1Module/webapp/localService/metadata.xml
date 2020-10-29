@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<edmx:Edmx Version="4.0"
+    xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:DataServices>
+        <Schema
+            xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="SalesServicePyk">
+            <EntityType Name="Header">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="salesNo" Type="Edm.String" MaxLength="10"/>
+                <Property Name="orderNo" Type="Edm.String" MaxLength="10"/>
+                <Property Name="custName" Type="Edm.String" MaxLength="10"/>
+                <Property Name="priceSum" Type="Edm.Decimal" Precision="9" Scale="2"/>
+                <Property Name="fileData" Type="Edm.Binary"/>
+                <NavigationProperty Name="items" Type="Collection(SalesServicePyk.Item)" Partner="parent">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Item">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="itemCode" Type="Edm.String" MaxLength="10"/>
+                <Property Name="custName" Type="Edm.String" MaxLength="10"/>
+                <Property Name="itemName" Type="Edm.String" MaxLength="10"/>
+                <Property Name="cnt" Type="Edm.Int32"/>
+                <Property Name="price" Type="Edm.Decimal" Precision="9" Scale="2"/>
+                <Property Name="parent_ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="parent" Type="SalesServicePyk.Header" Nullable="false" Partner="items">
+                    <ReferentialConstraint Property="parent_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Header" EntityType="SalesServicePyk.Header">
+                    <NavigationPropertyBinding Path="items" Target="Item"/>
+                </EntitySet>
+                <EntitySet Name="Item" EntityType="SalesServicePyk.Item">
+                    <NavigationPropertyBinding Path="parent" Target="Header"/>
+                </EntitySet>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

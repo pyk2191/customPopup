@@ -1,0 +1,63 @@
+<mvc:View
+	controllerName="com.mdpert.sales.SalesOrderV1Module.controller.Object"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false"
+		busy="{objectView>/busy}"
+		busyIndicatorDelay="{objectView>/delay}">
+
+		<semantic:titleHeading>
+			<Title text="{salesNo}" />
+		</semantic:titleHeading>
+
+		<semantic:headerContent>
+		</semantic:headerContent>
+
+        <semantic:content>
+			<Table
+				id="table"
+				width="auto">
+
+				<columns>
+					<Column id="itemCode">
+						<Text text="아이템 코드" id="itemCodeColum"/>
+					</Column>
+					<Column id="itemName" hAlign="End">
+						<Text text="아이템명" id="itemNameColum"/>
+					</Column>
+					<Column id="itemCount" hAlign="End">
+						<Text text="개수" id="itemCountColum"/>
+					</Column>
+					<Column id="itemPrice" hAlign="End">
+						<Text text="가격" id="itemPriceColum"/>
+					</Column>
+				</columns>
+
+				<items>
+					<ColumnListItem>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</semantic:content>
+
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
+		</semantic:sendEmailAction>
+
+		<semantic:shareInJamAction>
+			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press=".onShareInJamPress"/>
+		</semantic:shareInJamAction>
+
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton id ="shareTile" title="{objectView>/saveAsTileTitle}" />
+		</semantic:saveAsTileAction>
+
+	</semantic:SemanticPage>
+
+</mvc:View>
